@@ -1,15 +1,12 @@
 from paddleocr import PaddleOCR,draw_ocr
 from PIL import Image
 import gradio as gr
-
-ocr = PaddleOCR(use_angle_cls=True, lang='en') # need to run only once to download and load model into memory
+ocr = PaddleOCR(use_angle_cls=True, lang='en')
 def inference(img):
     img_path = img.name
     result = ocr.ocr(img_path, cls=True)
     for line in result:
         print(line)
-    
-    # draw result
     image = Image.open(img_path).convert('RGB')
     boxes = [line[0] for line in result]
     txts = [line[1][0] for line in result]
@@ -25,7 +22,7 @@ article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2104.057
 
 gr.Interface(
     inference, 
-    [gr.inputs.Image(type="file", label="Input")], 
+    gr.inputs.Image(type="file", label="Input"), 
     gr.outputs.Image(type="file", label="Output"),
     title=title,
     description=description,
