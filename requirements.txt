@@ -1,4 +1,4 @@
-paddleocr
 paddlepaddle
+paddleocr
 Pillow
 gradio
