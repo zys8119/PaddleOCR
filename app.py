@@ -27,3 +27,4 @@ gr.Interface(
     title=title,
     description=description,
     article=article).launch(debug=True)
+    
