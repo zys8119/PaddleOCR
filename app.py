@@ -4,7 +4,7 @@ os.system('pip install paddleocr')
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
 import gradio as gr
-ocr = PaddleOCR(use_angle_cls=True, lang='en')
+ocr = PaddleOCR(use_angle_cls=True, lang='en',use_gpu=False)
 
 def inference(img):
     img_path = img.name
