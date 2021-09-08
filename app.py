@@ -1,5 +1,5 @@
 import os
-os.system('conda install paddlepaddle --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/')
+os.system('pip install paddlepaddle')
 os.system('pip install paddleocr')
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
