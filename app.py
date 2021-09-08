@@ -1,16 +1,11 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
 import gradio as gr
 ocr = PaddleOCR(use_angle_cls=True, lang='en')
 
-
 def inference(img):
     img_path = img.name
     result = ocr.ocr(img_path, cls=True)
-    for line in result:
-        print line
     image = Image.open(img_path).convert('RGB')
     boxes = [line[0] for line in result]
     txts = [line[1][0] for line in result]
