@@ -35,3 +35,4 @@ gr.Interface(
     article=article,
     examples=examples
     ).launch(debug=True)
+    
