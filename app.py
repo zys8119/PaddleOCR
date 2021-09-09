@@ -4,6 +4,7 @@ os.system('pip install paddleocr')
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
 import gradio as gr
+import torch
 ocr = PaddleOCR(use_angle_cls=True, lang='en',use_gpu=False)
 
 torch.hub.download_url_to_file('https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.3/doc/imgs_en/254.jpg', 'receipt.jpg')
