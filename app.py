@@ -26,6 +26,7 @@ title = 'PaddleOCR'
 description = 'Gradio demo for PaddleOCR. To use it, simply upload your image, or click one of the examples to load them. Read more at the links below.'
 article = "<p style='text-align: center'><a href='https://www.paddlepaddle.org.cn/hub/scene/ocr'>Awesome multilingual OCR toolkits based on PaddlePaddle （practical ultra lightweight OCR system, support 80+ languages recognition, provide data annotation and synthesis tools, support training and deployment among server, mobile, embedded and IoT devices）</a> | <a href='https://github.com/PaddlePaddle/PaddleOCR'>Github Repo</a></p>"
 examples = [['example.jpg']]
+css = ".output_image, .input_image {height: 40rem !important; width: 100% !important;}"
 gr.Interface(
     inference,
     gr.inputs.Image(type='file', label='Input'),
@@ -33,5 +34,6 @@ gr.Interface(
     title=title,
     description=description,
     article=article,
-    examples=examples
+    examples=examples,
+    css=css
     ).launch(debug=True)
