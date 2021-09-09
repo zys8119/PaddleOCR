@@ -7,7 +7,7 @@ import gradio as gr
 import torch
 ocr = PaddleOCR(use_angle_cls=True, lang='en',use_gpu=False)
 
-torch.hub.download_url_to_file('https://i.imgur.com/2sylF76.jpg', 'example.jpg')
+torch.hub.download_url_to_file('https://i.imgur.com/aqMBT0i.jpg', 'example.jpg')
 
 def inference(img):
     img_path = img.name
