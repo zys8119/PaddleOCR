@@ -11,7 +11,7 @@ torch.hub.download_url_to_file('https://i.imgur.com/aqMBT0i.jpg', 'example.jpg')
 def inference(img, lang):
     ocr = PaddleOCR(use_angle_cls=True, lang=lang,use_gpu=False)
     img_path = img.name
-    result = ocr.ocr(img_path, cls=True)
+    result = ocr.ocr(img_path, cls=True)[0]
     image = Image.open(img_path).convert('RGB')
     boxes = [line[0] for line in result]
     txts = [line[1][0] for line in result]
