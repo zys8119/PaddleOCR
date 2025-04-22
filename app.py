@@ -6,6 +6,8 @@ from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
 import gradio as gr
 
+ocr = PaddleOCR(use_angle_cls=True, lang=lang,use_gpu=False)
+
 def download_image(url, save_path):
     """
     Download an image from a specified URL and save it to the specified path
@@ -37,7 +39,7 @@ image_url = "https://raw.githubusercontent.com/PaddlePaddle/PaddleOCR/v2.8.0/doc
 download_image(image_url, "example.jpg")
 
 def inference(img, lang):
-	ocr = PaddleOCR(use_angle_cls=True, lang=lang,use_gpu=False)
+	
 	img_path = img  
 	result = ocr.ocr(img_path, cls=True)[0]
 	image = Image.open(img_path).convert('RGB')
