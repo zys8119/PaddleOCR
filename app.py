@@ -45,5 +45,6 @@ gr.Interface(
     title=title,
     description=description,
     examples=examples,
+    cache_examples=False,
     css=css
     ).launch(debug=False)
