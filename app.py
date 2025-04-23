@@ -1,7 +1,7 @@
 import atexit
 import functools
 from queue import Queue
-from threading import Thread
+from threading import Lock, Thread
 
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
@@ -26,6 +26,7 @@ class PaddleOCRModelManager(object):
         super().__init__()
         self._model_factory = model_factory
         self._queue = Queue()
+        self._model_init_lock = Lock()
         self._workers = []
         for _ in range(num_workers):
             worker = Thread(target=self._worker, daemon=False)
@@ -49,7 +50,8 @@ class PaddleOCRModelManager(object):
             worker.join()
 
     def _worker(self):
-        model = self._model_factory()
+        with self._model_init_lock:
+            model = self._model_factory()
         while True:
             item = self._queue.get()
             if item is None:
