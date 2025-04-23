@@ -18,6 +18,8 @@ LANG_CONFIG = {
 }
 CONCURRENCY_LIMIT = 8
 
+model_init_lock = Lock()
+
 
 class PaddleOCRModelManager(object):
     def __init__(self,
@@ -26,7 +28,6 @@ class PaddleOCRModelManager(object):
         super().__init__()
         self._model_factory = model_factory
         self._queue = Queue()
-        self._model_init_lock = Lock()
         self._workers = []
         for _ in range(num_workers):
             worker = Thread(target=self._worker, daemon=False)
@@ -50,7 +51,7 @@ class PaddleOCRModelManager(object):
             worker.join()
 
     def _worker(self):
-        with self._model_init_lock:
+        with model_init_lock:
             model = self._model_factory()
         while True:
             item = self._queue.get()
