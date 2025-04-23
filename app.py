@@ -1,7 +1,7 @@
 import atexit
 import functools
 from queue import Queue
-from threading import Lock, Thread
+from threading import Event, Thread
 
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
@@ -9,16 +9,14 @@ import gradio as gr
 
 
 LANG_CONFIG = {
-    "ch": {"num_workers": 4},
-    "en": {"num_workers": 4},
+    "ch": {"num_workers": 2},
+    "en": {"num_workers": 2},
     "fr": {"num_workers": 1},
     "german": {"num_workers": 1},
     "korean": {"num_workers": 1},
     "japan": {"num_workers": 1},
 }
 CONCURRENCY_LIMIT = 8
-
-model_init_lock = Lock()
 
 
 class PaddleOCRModelManager(object):
@@ -29,9 +27,12 @@ class PaddleOCRModelManager(object):
         self._model_factory = model_factory
         self._queue = Queue()
         self._workers = []
+        self._model_initialized_event = Event()
         for _ in range(num_workers):
             worker = Thread(target=self._worker, daemon=False)
             worker.start()
+            self._model_initialized_event.wait()
+            self._model_initialized_event.clear()
             self._workers.append(worker)
 
     def infer(self, *args, **kwargs):
@@ -51,8 +52,8 @@ class PaddleOCRModelManager(object):
             worker.join()
 
     def _worker(self):
-        with model_init_lock:
-            model = self._model_factory()
+        model = self._model_factory()
+        self._model_initialized_event.set()
         while True:
             item = self._queue.get()
             if item is None:
