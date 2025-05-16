@@ -2,4 +2,4 @@ Pillow
 Gradio
 requests
 paddlepaddle
-paddleocr
+paddleocr==2.10.0
