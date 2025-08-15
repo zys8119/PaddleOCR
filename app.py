@@ -129,6 +129,6 @@ gr.Interface(
     concurrency_limit=CONCURRENCY_LIMIT,
     ).launch(
         debug=False,
-        serve_name="0.0.0.0",  # 设置服务的主机地址，可以是 '0.0.0.0' 或指定 IP 地址
-        serve_port=7860,       # 设置服务的端口号
+        server_name="0.0.0.0",  # 设置服务的主机地址，可以是 '0.0.0.0' 或指定 IP 地址
+        server_port=7860,       # 设置服务的端口号
     )
